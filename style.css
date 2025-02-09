@@ -1,0 +1,16 @@
+.board {
+    width: 270px;
+    height: 270px;
+    background-color: #5c4211;
+    display: grid;
+    grid-template: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr / 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+.hole, .space {
+    width: 25px;
+    height: 25px;
+    margin: 2.5px;
+    border-radius: 50%;
+}
+.hole {
+    background-color: #a16f11;
+}
