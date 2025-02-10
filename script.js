@@ -15,15 +15,62 @@ let gridPattern = [
     ['0', '0', '0', 'x', 'x', 'x', '0', '0', '0']
 ];
 
+let pegs = []
+
 function spawnBoard() {  
-    gridPattern.forEach(row => {
-        row.forEach(cell => {
+    gridPattern.forEach((row, y) => {
+        row.forEach((cell, x) => {
             const span = document.createElement('span');
             span.className = cell === '0' ? 'space' : 'hole';
+            if (cell === '#') {
+                span.classList.add('filled');
+            }
+            if (cell === 'x') {
+                if (x != Math.floor(WIDTH / 2) || y != Math.floor(HEIGHT / 2)) {
+                    pegs.push([x,y])
+                }
+            }
+            span.addEventListener("click", function() {
+                if (!span.classList.contains("hole")) { return }
+                clearSelectedPeg()
+                highlightPeg(span, !span.classList.contains('selected'))
+            })
             BOARD.appendChild(span);
         });
     });
 }
 
+function clearBoard() {
+    BOARD.innerHTML = ""
+}
+
+function displayPegs() {
+    pegs.forEach(peg => {
+        let x = peg[0]
+        let y = peg[1]
+        gridPattern[y][x] = "#"
+    })
+    clearBoard()
+    spawnBoard()
+}
+
+function clearSelectedPeg() {
+    document.querySelectorAll('.selected').forEach(selected => selected.classList.remove('selected'))
+}
+
+function highlightPeg(peg, higligtState) {
+    if (higligtState) {
+        peg.classList.add('selected')
+    } else {
+        peg.classList.remove('selected')
+    }
+}
+
+function clickPegHole(element) {
+    if (element.classList.contains('peg')) {
+        highlightPeg(element, true)
+    }
+}
 
 spawnBoard()
+displayPegs()
