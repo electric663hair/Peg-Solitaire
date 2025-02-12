@@ -3,6 +3,7 @@ const HEIGHT = 9
 const MIDDLE_SEGMENT = Math.floor(WIDTH / 3)
 const SPACE = (WIDTH - MIDDLE_SEGMENT) / 2
 const BOARD = document.querySelector(".board")
+const PEG_COUNTER = document.querySelector("p.counter");
 let gridPattern = [
     ['0', '0', '0', 'x', 'x', 'x', '0', '0', '0'],
     ['0', '0', '0', 'x', 'x', 'x', '0', '0', '0'],
@@ -21,6 +22,16 @@ spawnBoard()
 displayPegs()
 clearBoard()
 spawnBoard()
+updatePegCount()
+
+function amountOfPegs() {
+    return document.querySelectorAll("span.hole.filled").length
+}
+
+function updatePegCount() {
+    PEG_COUNTER.textContent = amountOfPegs()
+}
+
 
 // function displayGrid() {
 //     const formattedText = gridPattern.map(row => row.join(' ')).join('\n');
@@ -49,6 +60,7 @@ function spawnBoard() {
                 } else {
                     clearGraphics()
                 }
+                updatePegCount()
             })
             BOARD.appendChild(span);
         });
@@ -159,4 +171,25 @@ function getPossibleMoves(element) {
     }
 
     return possible;
+}
+
+
+// website scaling
+let scale = 1.5;
+updateZoom()
+function zoomIn() {
+    scale += 0.1;
+    updateZoom()
+}
+function zoomOut() {
+    scale -= 0.1;
+    updateZoom()
+}
+function resetZoom() {
+    scale = 1;
+    updateZoom()
+}
+function updateZoom() {
+    BOARD.style.transform = `scale(${scale})`;
+    BOARD.style.transformOrigin = "top center";
 }

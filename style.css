@@ -1,9 +1,74 @@
+::-webkit-scrollbar{
+    width: 0;
+    height: 0;
+}
+
+* {
+    user-select: none;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    background-color: #2C3930;
+}
+
+h1 {
+    color: white;
+    font-size: 40px;
+}
+
+p {
+    color: white;
+    font-size: 30px;
+    font-weight: 525;
+    font-family: cursive;
+}
+
+.zoomBtns {
+    position: absolute;
+    bottom: 50px;
+    width: 80%;
+    height: 10%;
+    padding: 20px;
+    background-color: #3c5c47;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+button {
+    font-size: 2vw;
+    background-color: #a27b5c;
+    border: none;
+    box-shadow: 4px 4px 0 0 #321c0c;
+    border-radius: 15px;
+    height: 80%;
+    width: 30%;
+    color: #DCD7C9;
+    font-family: 'Times New Roman', Times, serif;
+}
+button:active {
+    position: relative;
+    top: 2px;
+    left: 1.4px;
+    box-shadow: 3px 2px 0 0 #321c0c;
+}
+
 .board {
     width: 270px;
     height: 270px;
-    background-color: #5c4211;
+    background-color: #3F4F44;
     display: grid;
     grid-template: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr / 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    border-radius: 15%;
+    padding: 5px;
 }
 .hole, .space {
     width: 25px;
@@ -12,22 +77,22 @@
 }
 .hole {
     border-radius: 50%;
-    background-color: #a16f11;
+    background-color: #A27B5C;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
 }
 .selected {
-    background-color: white;
+    background-color: #DCD7C9;
 }
 .hole.filled::after {
     content: "";
-    width: 19px; /* Adjust size for inner circle */
-    height: 19px;
-    background-color: #e7be65;
+    width: 17px; /* Adjust size for inner circle */
+    height: 17px;
+    background-color: #8f5e23;
     border-radius: 50%;
 }
 .possible {
-    background-color: red;
+    background-color: #e7be65;
 }
