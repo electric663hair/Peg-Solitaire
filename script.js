@@ -89,6 +89,7 @@ function endGame() {
 function resetGame() {
     BOARD.classList.remove("end")
     gridPattern = structuredClone(DEFAULT_PATTERN);
+    pegs = []
     spawnBoard()
     clearBoard()
     displayPegs()
