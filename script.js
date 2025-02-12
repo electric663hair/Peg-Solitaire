@@ -16,8 +16,12 @@ const DEFAULT_PATTERN = [
     ['0', '0', '0', 'x', 'x', 'x', '0', '0', '0'],
     ['0', '0', '0', 'x', 'x', 'x', '0', '0', '0']
 ]
-let gridPattern = structuredClone(DEFAULT_PATTERN);
 
+let gridPattern = structuredClone(DEFAULT_PATTERN);
+let bestScore = localStorage.getItem("bestScore")
+if (bestScore != 0 && !bestScore) {
+    bestScore = 45
+}
 let pegs = []
 
 spawnBoard()
@@ -32,6 +36,12 @@ function amountOfPegs() {
 
 function updatePegCount() {
     PEG_COUNTER.textContent = amountOfPegs()
+    document.querySelector(".bestScore").textContent = `Best Score: ${bestScore}`
+    if (amountOfPegs() < bestScore) {
+        bestScore = amountOfPegs()
+        localStorage.setItem("bestScore", bestScore)
+        document.querySelector(".bestScore").textContent = `Best Score: ${bestScore}`
+    }
 }
 
 
@@ -205,7 +215,8 @@ function canMovePegs() {
 }
 
 // website scaling
-let scale = 1.5;
+let scale = localStorage.getItem("boardSize");
+if (!scale) scale = 1;
 updateZoom()
 function zoomIn() {
     scale += 0.1;
@@ -216,10 +227,12 @@ function zoomOut() {
     updateZoom()
 }
 function resetZoom() {
-    scale = 1.5;
+    scale = 1;
     updateZoom()
 }
 function updateZoom() {
+    scale = Math.round(scale*10)/10
+    localStorage.setItem("boardSize", scale)
     BOARD.style.transform = `scale(${scale})`;
     BOARD.style.transformOrigin = "top center";
 }
