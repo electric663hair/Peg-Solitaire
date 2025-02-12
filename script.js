@@ -17,6 +17,16 @@ let gridPattern = [
 
 let pegs = []
 
+spawnBoard()
+displayPegs()
+clearBoard()
+spawnBoard()
+
+// function displayGrid() {
+//     const formattedText = gridPattern.map(row => row.join(' ')).join('\n');
+//     document.getElementById('output').textContent = formattedText;
+// }
+
 function spawnBoard() {  
     gridPattern.forEach((row, y) => {
         row.forEach((cell, x) => {
@@ -31,11 +41,47 @@ function spawnBoard() {
                 pegs.push([x,y])
             }
             span.addEventListener("click", function() {
-                clickPegHole(span)
+                if (span.classList.contains("hole") && span.classList.contains("possible")) {
+                    moveSelectedToPos(span.dataset.x, span.dataset.y)
+                } else if (span.classList.contains("hole") && span.classList.contains("filled")) {
+                    clearGraphics()
+                    clickPegHole(span)
+                } else {
+                    clearGraphics()
+                }
             })
             BOARD.appendChild(span);
         });
     });
+}
+
+function moveSelectedToPos(x,y) {
+    if (!x || !y) { return }
+    
+    const selectedPeg = document.querySelector(".selected");
+    const moveToPeg = getElementByCoordinates(x,y)
+    const pos1 = [parseInt(selectedPeg.dataset.x, 10), parseInt(selectedPeg.dataset.y, 10)]
+    const nPos = [pos1[0] - (pos1[0] - x)/2, pos1[1] - (pos1[1] - y)/2]
+    const middlePeg = getElementByCoordinates(nPos[0], nPos[1])
+
+    removePegAtCords(pos1[0], pos1[1])
+    removePegAtCords(nPos[0], nPos[1])
+    getElementByCoordinates(x,y).classList.add("filled")
+    pegs.push([x,y])
+    gridPattern[y][x] = "#"
+
+    displayPegs()
+}
+
+function removePegAtCords(x,y) {
+    pegs = pegs.filter(coord => !(coord[0] == x && coord[1] == y));
+    gridPattern[y][x] = "_"
+    getElementByCoordinates(x,y).classList.remove("filled")
+}
+
+function clearGraphics() {
+    clearPossiblePegs()
+    clearSelectedPeg()
 }
 
 function clearBoard() {
@@ -43,13 +89,13 @@ function clearBoard() {
 }
 
 function displayPegs() {
+    clearGraphics()
+
     pegs.forEach(peg => {
         let x = peg[0]
         let y = peg[1]
         gridPattern[y][x] = "#"
     })
-    clearBoard()
-    spawnBoard()
 }
 
 function clearSelectedPeg() {
@@ -65,14 +111,14 @@ function highlightPeg(peg, higligtState) {
 }
 
 function clickPegHole(element) {
-    if (!element.classList.contains('hole')) { return }
-
     clearSelectedPeg()
     highlightPeg(element, true)
     displayPossiblePegs(element, getPossibleMoves(element))
 }
 
 function displayPossiblePegs(peg, directions) {
+    clearPossiblePegs()
+
     let x = parseInt(peg.dataset.x, 10);
     let y = parseInt(peg.dataset.y, 10);
 
@@ -82,7 +128,7 @@ function displayPossiblePegs(peg, directions) {
 }
 
 function clearPossiblePegs() {
-    document.querySelectorAll(".possible").forEach(peg => peg.classList.remove(possible))
+    document.querySelectorAll(".possible").forEach(peg => peg.classList.remove("possible"))
 }
 
 function getElementByCoordinates(x, y) {
@@ -104,7 +150,7 @@ function getPossibleMoves(element) {
     for (let [dx, dy, move] of moves) {
         let nx = x + dx, nnx = x + 2 * dx;
         let ny = y + dy, nny = y + 2 * dy;
-        console.log(gridPattern[ny][nx], gridPattern[nny][nnx], nx, ny, nnx, nny)
+        // console.log(gridPattern[ny][nx], gridPattern[nny][nnx], nx, ny, nnx, nny)
         if (nx >= 0 && nnx >= 0 && ny >= 0 && nny >= 0 &&
             nx < WIDTH && nnx < WIDTH && ny < HEIGHT && nny < HEIGHT &&
             gridPattern[ny][nx] === "#" && !["0", "#"].includes(gridPattern[nny][nnx])) {
@@ -114,7 +160,3 @@ function getPossibleMoves(element) {
 
     return possible;
 }
-
-
-spawnBoard()
-displayPegs()

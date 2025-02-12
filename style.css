@@ -9,9 +9,9 @@
     width: 25px;
     height: 25px;
     margin: 2.5px;
-    border-radius: 50%;
 }
 .hole {
+    border-radius: 50%;
     background-color: #a16f11;
     display: flex;
     align-items: center;
