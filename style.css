@@ -50,9 +50,19 @@ button {
     box-shadow: 4px 4px 0 0 #321c0c;
     border-radius: 15px;
     height: 80%;
-    width: 30%;
+    width: 27%;
     color: #DCD7C9;
     font-family: 'Times New Roman', Times, serif;
+    cursor: pointer;
+}
+button#resetBtn {
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+button#resetBtn > img {
+    width: 50%;
 }
 button:active {
     position: relative;
@@ -69,6 +79,40 @@ button:active {
     grid-template: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr / 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     border-radius: 15%;
     padding: 5px;
+}
+.board.end {
+    background-color: red;
+}
+.board.end::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #21212175;
+    border-radius: 15%;
+    z-index: 1;
+    /* pointer-events: none; */
+}
+.resetImg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100px;
+    height: 100px;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    z-index: 2;
+    padding: 5%;
+    background-color: #212121dd;
+    border-radius: 30%;
+}
+.board > .resetImg {
+    display: none;
+}
+.board.end > .resetImg {
+    display: block;
 }
 .hole, .space {
     width: 25px;
@@ -95,4 +139,7 @@ button:active {
 }
 .possible {
     background-color: #e7be65;
+}
+.red {
+    background-color: red;
 }

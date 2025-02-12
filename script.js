@@ -4,7 +4,8 @@ const MIDDLE_SEGMENT = Math.floor(WIDTH / 3)
 const SPACE = (WIDTH - MIDDLE_SEGMENT) / 2
 const BOARD = document.querySelector(".board")
 const PEG_COUNTER = document.querySelector("p.counter");
-let gridPattern = [
+const BOARD_HTML = document.querySelector(".board").innerHTML;
+const DEFAULT_PATTERN = [
     ['0', '0', '0', 'x', 'x', 'x', '0', '0', '0'],
     ['0', '0', '0', 'x', 'x', 'x', '0', '0', '0'],
     ['0', '0', '0', 'x', 'x', 'x', '0', '0', '0'],
@@ -14,7 +15,8 @@ let gridPattern = [
     ['0', '0', '0', 'x', 'x', 'x', '0', '0', '0'],
     ['0', '0', '0', 'x', 'x', 'x', '0', '0', '0'],
     ['0', '0', '0', 'x', 'x', 'x', '0', '0', '0']
-];
+]
+let gridPattern = structuredClone(DEFAULT_PATTERN);
 
 let pegs = []
 
@@ -61,10 +63,27 @@ function spawnBoard() {
                     clearGraphics()
                 }
                 updatePegCount()
+                if (!canMovePegs()) {
+                    endGame()
+                }
             })
             BOARD.appendChild(span);
         });
     });
+}
+
+function endGame() {
+    BOARD.classList.add("end")
+}
+
+function resetGame() {
+    BOARD.classList.remove("end")
+    gridPattern = structuredClone(DEFAULT_PATTERN);
+    spawnBoard()
+    clearBoard()
+    displayPegs()
+    spawnBoard()
+    updatePegCount()
 }
 
 function moveSelectedToPos(x,y) {
@@ -97,7 +116,7 @@ function clearGraphics() {
 }
 
 function clearBoard() {
-    BOARD.innerHTML = ""
+    BOARD.innerHTML = BOARD_HTML;
 }
 
 function displayPegs() {
@@ -136,11 +155,13 @@ function displayPossiblePegs(peg, directions) {
 
     for (let direction of directions) {
         getElementByCoordinates(x + direction["x"], y + direction["y"]).classList.add("possible");
+        getElementByCoordinates(x + direction["x"]/2, y + direction["y"]/2).classList.add("red")
     }
 }
 
 function clearPossiblePegs() {
     document.querySelectorAll(".possible").forEach(peg => peg.classList.remove("possible"))
+    document.querySelectorAll(".red").forEach(peg => peg.classList.remove("red"))
 }
 
 function getElementByCoordinates(x, y) {
@@ -173,6 +194,15 @@ function getPossibleMoves(element) {
     return possible;
 }
 
+function canMovePegs() {
+    const allPegs = document.querySelectorAll("span.hole.filled")
+    for (let i = 0; i<allPegs.length; i++) {
+        if (getPossibleMoves(allPegs[i]).length != 0) {
+            return true
+        }
+    }
+    return false
+}
 
 // website scaling
 let scale = 1.5;
@@ -186,7 +216,7 @@ function zoomOut() {
     updateZoom()
 }
 function resetZoom() {
-    scale = 1;
+    scale = 1.5;
     updateZoom()
 }
 function updateZoom() {

@@ -9,11 +9,14 @@
 <body>
     <h1>Peg Solitaire</h1>
     <p class="counter"></p>
-    <div class="board"></div>
+    <div class="board">
+        <img src="./reset.svg" alt="Reset Game" class="resetImg" onclick="resetGame()">
+    </div>
     <div class="zoomBtns">
         <button onclick="zoomIn()">+ Zoom In +</button>
         <button onclick="zoomOut()">- Zoom Out -</button>
         <button onclick="resetZoom()">~ Reset Zoom ~</button>
+        <button id="resetBtn" onclick="resetGame()"><img src="./reset.svg" alt="Reset Game"></button>
     </div>
     <!-- <pre id="output"></pre> -->
 
