@@ -15,6 +15,9 @@ body {
     justify-content: start;
     align-items: center;
     background-color: #2C3930;
+    overscroll-behavior-x: none;
+    overscroll-behavior-y: contain;
+    margin: 0;
 }
 
 h1 {

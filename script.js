@@ -67,8 +67,10 @@ function spawnBoard() {
                 if (span.classList.contains("hole") && span.classList.contains("possible")) {
                     moveSelectedToPos(span.dataset.x, span.dataset.y)
                 } else if (span.classList.contains("hole") && span.classList.contains("filled")) {
-                    clearGraphics()
-                    clickPegHole(span)
+                    if (getPossibleMoves(span).length > 0) {
+                        clearGraphics()
+                        clickPegHole(span)
+                    }
                 } else {
                     clearGraphics()
                 }
