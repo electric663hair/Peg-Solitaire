@@ -1,10 +1,3 @@
-const WIDTH = 9
-const HEIGHT = 9
-const MIDDLE_SEGMENT = Math.floor(WIDTH / 3)
-const SPACE = (WIDTH - MIDDLE_SEGMENT) / 2
-const BOARD = document.querySelector(".board")
-const PEG_COUNTER = document.querySelector("p.counter");
-const BOARD_HTML = document.querySelector(".board").innerHTML;
 const DEFAULT_PATTERN = [
     ['0', '0', '0', 'x', 'x', 'x', '0', '0', '0'],
     ['0', '0', '0', 'x', 'x', 'x', '0', '0', '0'],
@@ -16,6 +9,14 @@ const DEFAULT_PATTERN = [
     ['0', '0', '0', 'x', 'x', 'x', '0', '0', '0'],
     ['0', '0', '0', 'x', 'x', 'x', '0', '0', '0']
 ]
+
+const WIDTH = DEFAULT_PATTERN[0].length
+const HEIGHT = DEFAULT_PATTERN.length
+const MIDDLE_SEGMENT = Math.floor(WIDTH / 3)
+const SPACE = (WIDTH - MIDDLE_SEGMENT) / 2
+const BOARD = document.querySelector(".board")
+const PEG_COUNTER = document.querySelector("p.counter");
+const BOARD_HTML = document.querySelector(".board").innerHTML;
 
 let gridPattern = structuredClone(DEFAULT_PATTERN);
 let bestScore = localStorage.getItem("bestScore")
