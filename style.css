@@ -80,7 +80,7 @@ button:active {
     height: 270px;
     background-color: #3F4F44;
     display: grid;
-    grid-template: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr / 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template: 1fr 1fr 1fr 1fr 1fr 1fr 1fr / 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     border-radius: 15%;
     padding: 5px;
 }
@@ -119,8 +119,8 @@ button:active {
     display: block;
 }
 .hole, .space {
-    width: 25px;
-    height: 25px;
+    width: 35px;
+    height: 35px;
     margin: 2.5px;
 }
 .hole {
@@ -136,8 +136,8 @@ button:active {
 }
 .hole.filled::after {
     content: "";
-    width: 17px; /* Adjust size for inner circle */
-    height: 17px;
+    width: 85%; /* Adjust size for inner circle */
+    height: 85%;
     background-color: #8f5e23;
     border-radius: 50%;
 }
