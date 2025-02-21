@@ -15,6 +15,7 @@ const SPACE = (WIDTH - MIDDLE_SEGMENT) / 2
 const BOARD = document.querySelector(".board")
 const PEG_COUNTER = document.querySelector("p.counter");
 const BOARD_HTML = document.querySelector(".board").innerHTML;
+const BEST_SCORE_DISPLAY = document.querySelector(".bestScore");
 
 let gridPattern = structuredClone(DEFAULT_PATTERN);
 let bestScore = localStorage.getItem("bestScore")
@@ -35,19 +36,13 @@ function amountOfPegs() {
 
 function updatePegCount() {
     PEG_COUNTER.textContent = amountOfPegs()
-    document.querySelector(".bestScore").textContent = `Best Score: ${bestScore}`
+    BEST_SCORE_DISPLAY.textContent = `Best Score: ${bestScore}`
     if (amountOfPegs() < bestScore) {
         bestScore = amountOfPegs()
         localStorage.setItem("bestScore", bestScore)
-        document.querySelector(".bestScore").textContent = `Best Score: ${bestScore}`
+        BEST_SCORE_DISPLAY.textContent = `Best Score: ${bestScore}`
     }
 }
-
-
-// function displayGrid() {
-//     const formattedText = gridPattern.map(row => row.join(' ')).join('\n');
-//     document.getElementById('output').textContent = formattedText;
-// }
 
 function spawnBoard() {  
     gridPattern.forEach((row, y) => {
@@ -216,7 +211,7 @@ function canMovePegs() {
     return false
 }
 
-// website scaling
+// for scaling of game board
 let scale = localStorage.getItem("boardSize");
 if (!scale) scale = 1;
 updateZoom()
