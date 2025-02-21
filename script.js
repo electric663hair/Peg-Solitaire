@@ -19,7 +19,7 @@ const BOARD_HTML = document.querySelector(".board").innerHTML;
 let gridPattern = structuredClone(DEFAULT_PATTERN);
 let bestScore = localStorage.getItem("bestScore")
 if (bestScore != 0 && !bestScore) {
-    bestScore = 45
+    bestScore = amountOfPegs()
 }
 let pegs = []
 
@@ -166,8 +166,8 @@ function displayPossiblePegs(peg, directions) {
     let y = parseInt(peg.dataset.y, 10);
 
     for (let direction of directions) {
-        getElementByCoordinates(x + direction["x"], y + direction["y"]).classList.add("possible");
-        getElementByCoordinates(x + direction["x"]/2, y + direction["y"]/2).classList.add("red")
+        getElementByCoordinates(x + direction["x"], y + direction["y"]).classList.add("possible"); // the hole that you can jump to is highlighted 
+        // getElementByCoordinates(x + direction["x"]/2, y + direction["y"]/2).classList.add("red") // the piece that is jumped over and gets removed is highlighted 
     }
 }
 
