@@ -18,9 +18,9 @@ const BOARD_HTML = document.querySelector(".board").innerHTML;
 const BEST_SCORE_DISPLAY = document.querySelector(".bestScore");
 
 let gridPattern = structuredClone(DEFAULT_PATTERN);
-let bestScore = localStorage.getItem("bestScore")
-if (bestScore != 0 && !bestScore) {
-    bestScore = amountOfPegs()
+let bestScore = localStorage.getItem("bestScore");
+if ((bestScore != 1 || !bestScore) && bestScore > 0) {
+    bestScore = amountOfPegs();
 }
 let pegs = []
 
@@ -37,7 +37,7 @@ function amountOfPegs() {
 function updatePegCount() {
     PEG_COUNTER.textContent = amountOfPegs()
     BEST_SCORE_DISPLAY.textContent = `Best Score: ${bestScore}`
-    if (amountOfPegs() < bestScore) {
+    if (0 < amountOfPegs() < bestScore) {
         bestScore = amountOfPegs()
         localStorage.setItem("bestScore", bestScore)
         BEST_SCORE_DISPLAY.textContent = `Best Score: ${bestScore}`
